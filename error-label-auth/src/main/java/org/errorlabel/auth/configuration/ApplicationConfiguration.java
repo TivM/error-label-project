@@ -2,7 +2,7 @@ package org.errorlabel.auth.configuration;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import lombok.RequiredArgsConstructor;
-import org.errorlabel.auth.repository.UserRepository;
+import org.errorlabel.persistence.repository.auth.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

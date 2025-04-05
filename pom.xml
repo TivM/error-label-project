@@ -15,6 +15,7 @@
         <module>error-label-core</module>
         <module>error-label-gateway</module>
         <module>error-label-config</module>
+        <module>error-label-eureka</module>
     </modules>
 
     <properties>

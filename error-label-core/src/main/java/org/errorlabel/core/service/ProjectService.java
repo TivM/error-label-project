@@ -1,4 +1,12 @@
 package org.errorlabel.core.service;
 
-public class ProjectService {
+import org.errorlabel.persistence.entity.Project;
+
+import java.time.LocalDateTime;
+
+public interface ProjectService {
+
+    Long add(String projectName, Long userId);
+
+    Project getById(Long id);
 }

@@ -1,4 +1,4 @@
-package org.errorlabel.auth.repository;
+package org.errorlabel.persistence.repository.auth;
 
 import org.errorlabel.persistence.entity.roles.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
