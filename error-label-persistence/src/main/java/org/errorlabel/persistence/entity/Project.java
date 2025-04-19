@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -28,4 +30,12 @@ public class Project {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<DocumentMetadata> documents = new HashSet<>();
+
+    public void addDocument(DocumentMetadata document){
+        documents.add(document);
+        document.setProject(this);
+    }
 }

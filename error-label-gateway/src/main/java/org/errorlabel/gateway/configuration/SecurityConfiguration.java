@@ -1,6 +1,7 @@
 package org.errorlabel.gateway.configuration;
 
 import lombok.RequiredArgsConstructor;
+import org.errorlabel.persistence.model.enums.Scopes;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,7 +48,7 @@ public class SecurityConfiguration {
                                 .pathMatchers("/webjars/swagger-ui/**").permitAll()
                                 .pathMatchers("/v3/api-docs/**").permitAll()
                                 .pathMatchers("/api/auth/**").permitAll()
-                                .pathMatchers("/accounts/**").hasAuthority(Scopes.ADMIN.scopeName)
+                                .pathMatchers("/projects/**").hasAnyAuthority(Scopes.ADMIN.scopeName, Scopes.USER.scopeName)
                                 .pathMatchers("/banks/**").hasAuthority(Scopes.USER.scopeName)
                                 .pathMatchers("/stock/**").hasAuthority(Scopes.USER.scopeName)
                                 .pathMatchers("/storage/**").hasAuthority(Scopes.ADMIN.scopeName)

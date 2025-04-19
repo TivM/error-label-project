@@ -12,5 +12,6 @@
     <include file="003_CUSTOMER_TABLE.sql"/>
     <include file="004_CUSTOMER_TO_ROLE_TABLE.sql"/>
     <include file="005_ROLE_TO_ACCESS_TABLE.sql"/>
+    <include file="006_PROJECT_TABLE.sql"/>
 
 </databaseChangeLog>

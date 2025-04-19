@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 
 @ConfigurationPropertiesScan
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"org.errorlabel.persistence", "org.errorlabel.gateway"})
 public class GatewayApplication {
 
     public static void main(String[] args) {

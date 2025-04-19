@@ -5,17 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>error-label-project</artifactId>
+    <artifactId>error-label</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 
     <modules>
         <module>error-label-auth</module>
         <module>error-label-persistence</module>
-        <module>error-label-core</module>
+        <module>error-label-projects</module>
         <module>error-label-gateway</module>
         <module>error-label-config</module>
         <module>error-label-eureka</module>
+        <module>error-label-documents</module>
     </modules>
 
     <properties>

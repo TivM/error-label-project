@@ -5,8 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.example</groupId>
-        <artifactId>error-label-project</artifactId>
-        <version>1.0</version>
+        <artifactId>error-label</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>error-label-gateway</artifactId>
@@ -40,6 +41,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+            <version>1.18.36</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -64,6 +66,11 @@
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
             <version>3.4.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>error-label-persistence</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -76,6 +83,7 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
+                            <version>1.18.36</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>

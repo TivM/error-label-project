@@ -43,7 +43,7 @@ public class User implements UserDetails {
     )
     private Set<UserRole> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Project> projects = new HashSet<>();
 
     public void addProject(Project project){

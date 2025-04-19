@@ -41,7 +41,11 @@ services:
       - ./migrations:/liquibase/changelog
 
   eureka:
-    build: ./eureka-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: error-label-eureka/target/error-label-eureka-1.0.jar
     ports:
       - "8081:8081"
     networks:
@@ -57,7 +61,11 @@ services:
       retries: 4
 
   configs:
-    build: ./config-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: error-label-config/target/error-label-config-1.0.jar
     ports:
       - "8888:8888"
     networks:
@@ -77,7 +85,11 @@ services:
       retries: 4
 
   auth:
-    build: ./auth
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: error-label-auth/target/error-label-auth-1.0.jar
     ports:
       - "8087:8087"
     networks:
@@ -90,27 +102,31 @@ services:
     environment:
       DB_USERNAME: admin
       DB_PASSWORD: admin
-      DB_URL: jdbc:postgresql://database:5432/exchange
+      DB_URL: jdbc:postgresql://database:5432/label
       EUREKA_URL: http://eureka:8081/eureka
       CONFIG_URL: http://configs:8888/
 
-#  banking:
-#    build: ./banking
-#    ports:
-#      - "8084:8084"
-#    networks:
-#      - backend
-#    depends_on:
-#      configs:
-#        condition: service_healthy
-#      database:
-#        condition: service_started
-#    environment:
-#      DB_USERNAME: admin
-#      DB_PASSWORD: admin
-#      DB_URL: r2dbc:postgresql://database:5432/exchange
-#      EUREKA_URL: http://eureka:8081/eureka
-#      CONFIG_URL: http://configs:8888/
+  banking:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: error-label-persistence/target/error-label-persistence-1.0.jar
+    ports:
+      - "8089:8089"
+    networks:
+      - backend
+    depends_on:
+      configs:
+        condition: service_healthy
+      database:
+        condition: service_started
+    environment:
+      DB_USERNAME: admin
+      DB_PASSWORD: admin
+      DB_URL: jdbc:postgresql://database:5432/label
+      EUREKA_URL: http://eureka:8081/eureka
+      CONFIG_URL: http://configs:8888/
 #
 #  human-resource:
 #    build: ./human-resource
@@ -152,20 +168,24 @@ services:
 #      STOCK_URL: http://stock:8089/
 #      BANKING_URL: http://banking:8084/
 #
-#  gateway:
-#    build: ./api-gateway
-#    ports:
-#      - "8082:8082"
-#    networks:
-#      - backend
-#    depends_on:
-#      configs:
-#        condition: service_healthy
-#      database:
-#        condition: service_started
-#    environment:
-#      EUREKA_URL: http://eureka:8081/eureka
-#      CONFIG_URL: http://configs:8888/
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: error-label-gateway/target/error-label-gateway-1.0.jar
+    ports:
+      - "8082:8082"
+    networks:
+      - backend
+    depends_on:
+      configs:
+        condition: service_healthy
+      database:
+        condition: service_started
+    environment:
+      EUREKA_URL: http://eureka:8081/eureka
+      CONFIG_URL: http://configs:8888/
 #      STOCK_URL: http://stock:8089/
 #      BANKING_URL: http://banking:8084/
 #      AUTH_URL: http://auth:8088/
