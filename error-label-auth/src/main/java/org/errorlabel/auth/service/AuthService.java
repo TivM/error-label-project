@@ -10,6 +10,7 @@ import org.errorlabel.persistence.entity.roles.UserRole;
 import org.errorlabel.persistence.model.auth.JwtTokenDTO;
 import org.errorlabel.persistence.model.auth.UserLogInDTO;
 import org.errorlabel.persistence.model.auth.UserRegistrationDTO;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -10,6 +10,8 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
+	<packaging>jar</packaging>
+
 	<artifactId>error-label-persistence</artifactId>
 
 	<properties>
@@ -49,6 +51,21 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<classifier>jar</classifier> <!-- Это добавит суффикс к артефакту -->
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

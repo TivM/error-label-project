@@ -4,8 +4,10 @@ import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import lombok.RequiredArgsConstructor;
 import org.errorlabel.persistence.repository.auth.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -24,6 +26,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 @RequiredArgsConstructor
+@EntityScan("org.errorlabel.persistence")
+@EnableJpaRepositories("org.errorlabel.persistence.repository")
 public class ApplicationConfiguration {
 
     private final UserRepository userRepository;

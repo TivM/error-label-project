@@ -12,7 +12,7 @@ services:
       - POSTGRES_PASSWORD=admin
     restart: always
     healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "admin", "-d", "exchange" ]
+      test: [ "CMD", "pg_isready", "-U", "admin", "-d", "label" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -40,93 +40,93 @@ services:
     volumes:
       - ./migrations:/liquibase/changelog
 
-  eureka:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        JAR_FILE: error-label-eureka/target/error-label-eureka-1.0.jar
-    ports:
-      - "8081:8081"
-    networks:
-      - backend
-    depends_on:
-      - database
-      - liquibase-migrations
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://eureka:8081/actuator/health"]
-      interval: 10s
-      start_period: 10s
-      timeout: 5s
-      retries: 4
-
-  configs:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        JAR_FILE: error-label-config/target/error-label-config-1.0.jar
-    ports:
-      - "8888:8888"
-    networks:
-      - backend
-    depends_on:
-      eureka:
-        condition: service_healthy
-      database:
-        condition: service_started
-    environment:
-      EUREKA_URL: http://eureka:8081/eureka
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://configs:8888/actuator/health" ]
-      interval: 10s
-      start_period: 10s
-      timeout: 5s
-      retries: 4
-
-  auth:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        JAR_FILE: error-label-auth/target/error-label-auth-1.0.jar
-    ports:
-      - "8087:8087"
-    networks:
-      - backend
-    depends_on:
-      configs:
-        condition: service_healthy
-      database:
-        condition: service_started
-    environment:
-      DB_USERNAME: admin
-      DB_PASSWORD: admin
-      DB_URL: jdbc:postgresql://database:5432/label
-      EUREKA_URL: http://eureka:8081/eureka
-      CONFIG_URL: http://configs:8888/
-
-  banking:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        JAR_FILE: error-label-persistence/target/error-label-persistence-1.0.jar
-    ports:
-      - "8089:8089"
-    networks:
-      - backend
-    depends_on:
-      configs:
-        condition: service_healthy
-      database:
-        condition: service_started
-    environment:
-      DB_USERNAME: admin
-      DB_PASSWORD: admin
-      DB_URL: jdbc:postgresql://database:5432/label
-      EUREKA_URL: http://eureka:8081/eureka
-      CONFIG_URL: http://configs:8888/
+#  eureka:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#      args:
+#        JAR_FILE: error-label-eureka/target/error-label-eureka-1.0.jar
+#    ports:
+#      - "8081:8081"
+#    networks:
+#      - backend
+#    depends_on:
+#      - database
+#      - liquibase-migrations
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://eureka:8081/actuator/health"]
+#      interval: 10s
+#      start_period: 10s
+#      timeout: 5s
+#      retries: 4
+#
+#  configs:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#      args:
+#        JAR_FILE: error-label-config/target/error-label-config-1.0.jar
+#    ports:
+#      - "8888:8888"
+#    networks:
+#      - backend
+#    depends_on:
+#      eureka:
+#        condition: service_healthy
+#      database:
+#        condition: service_started
+#    environment:
+#      EUREKA_URL: http://eureka:8081/eureka
+#    healthcheck:
+#      test: [ "CMD", "curl", "-f", "http://configs:8888/actuator/health" ]
+#      interval: 10s
+#      start_period: 10s
+#      timeout: 5s
+#      retries: 4
+#
+#  auth:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#      args:
+#        JAR_FILE: error-label-auth/target/error-label-auth-1.0.jar
+#    ports:
+#      - "8087:8087"
+#    networks:
+#      - backend
+#    depends_on:
+#      configs:
+#        condition: service_healthy
+#      database:
+#        condition: service_started
+#    environment:
+#      DB_USERNAME: admin
+#      DB_PASSWORD: admin
+#      DB_URL: jdbc:postgresql://database:5432/label
+#      EUREKA_URL: http://eureka:8081/eureka
+#      CONFIG_URL: http://configs:8888/
+#
+#  banking:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#      args:
+#        JAR_FILE: error-label-persistence/target/error-label-persistence-1.0.jar
+#    ports:
+#      - "8089:8089"
+#    networks:
+#      - backend
+#    depends_on:
+#      configs:
+#        condition: service_healthy
+#      database:
+#        condition: service_started
+#    environment:
+#      DB_USERNAME: admin
+#      DB_PASSWORD: admin
+#      DB_URL: jdbc:postgresql://database:5432/label
+#      EUREKA_URL: http://eureka:8081/eureka
+#      CONFIG_URL: http://configs:8888/
 #
 #  human-resource:
 #    build: ./human-resource
@@ -168,24 +168,24 @@ services:
 #      STOCK_URL: http://stock:8089/
 #      BANKING_URL: http://banking:8084/
 #
-  gateway:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        JAR_FILE: error-label-gateway/target/error-label-gateway-1.0.jar
-    ports:
-      - "8082:8082"
-    networks:
-      - backend
-    depends_on:
-      configs:
-        condition: service_healthy
-      database:
-        condition: service_started
-    environment:
-      EUREKA_URL: http://eureka:8081/eureka
-      CONFIG_URL: http://configs:8888/
+#  gateway:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#      args:
+#        JAR_FILE: error-label-gateway/target/error-label-gateway-1.0.jar
+#    ports:
+#      - "8082:8082"
+#    networks:
+#      - backend
+#    depends_on:
+#      configs:
+#        condition: service_healthy
+#      database:
+#        condition: service_started
+#    environment:
+#      EUREKA_URL: http://eureka:8081/eureka
+#      CONFIG_URL: http://configs:8888/
 #      STOCK_URL: http://stock:8089/
 #      BANKING_URL: http://banking:8084/
 #      AUTH_URL: http://auth:8088/
